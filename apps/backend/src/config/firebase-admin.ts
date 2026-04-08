@@ -9,7 +9,11 @@ if (!admin.apps.length) {
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey: privateKey,
     }),
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${process.env.FIREBASE_PROJECT_ID}.appspot.com`,
   });
 }
 
 export const firebaseAdmin = admin;
+export const db = admin.firestore();
+export const storage = admin.storage();
+export const authAdmin = admin.auth();

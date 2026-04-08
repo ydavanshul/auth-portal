@@ -1,0 +1,103 @@
+[debug] [2026-04-08T02:27:55.454Z] ----------------------------------------------------------------------
+[debug] [2026-04-08T02:27:55.457Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\yaada\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-04-08T02:27:55.458Z] CLI Version:   15.13.0
+[debug] [2026-04-08T02:27:55.458Z] Platform:      win32
+[debug] [2026-04-08T02:27:55.458Z] Node Version:  v24.14.1
+[debug] [2026-04-08T02:27:55.458Z] Time:          Wed Apr 08 2026 07:57:55 GMT+0530 (India Standard Time)
+[debug] [2026-04-08T02:27:55.459Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-04-08T02:27:57.717Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T02:27:57.718Z] > authorizing via signed-in user (email.anshulyadav@gmail.com)
+[debug] [2026-04-08T02:27:57.718Z] [iam] checking project auth-portal-yda123 for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2026-04-08T02:27:57.721Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:27:57.721Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:27:57.723Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/auth-portal-yda123:testIamPermissions [none]
+[debug] [2026-04-08T02:27:57.723Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/auth-portal-yda123:testIamPermissions  x-goog-user-project=auth-portal-yda123
+[debug] [2026-04-08T02:27:57.723Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/auth-portal-yda123:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-04-08T02:27:59.229Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/auth-portal-yda123:testIamPermissions 200
+[debug] [2026-04-08T02:27:59.229Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/auth-portal-yda123:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-04-08T02:27:59.230Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:27:59.230Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:27:59.231Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/auth-portal-yda123 [none]
+[debug] [2026-04-08T02:27:59.671Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/auth-portal-yda123 200
+[debug] [2026-04-08T02:27:59.671Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/auth-portal-yda123 {"projectId":"auth-portal-yda123","projectNumber":"683788183457","displayName":"auth-portal","name":"projects/auth-portal-yda123","resources":{"hostingSite":"auth-portal-yda123"},"state":"ACTIVE","etag":"1_e0fe1b37-786d-4c11-a5e9-c79c5031c605"}
+[debug] [2026-04-08T02:28:15.006Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:15.006Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:15.006Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites pageToken=&pageSize=10
+[debug] [2026-04-08T02:28:16.281Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites 200
+[debug] [2026-04-08T02:28:16.281Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites {"sites":[{"name":"projects/auth-portal-yda123/sites/auth-portal-yda123","defaultUrl":"https://auth-portal-yda123.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-04-08T02:28:16.282Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:16.282Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:16.282Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites 
+[debug] [2026-04-08T02:28:16.986Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites 200
+[debug] [2026-04-08T02:28:16.986Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites {"sites":[{"name":"projects/auth-portal-yda123/sites/auth-portal-yda123","defaultUrl":"https://auth-portal-yda123.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-04-08T02:28:16.986Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:16.986Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:16.986Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/auth-portal-yda123/webApps/-/config [none]
+[debug] [2026-04-08T02:28:17.592Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/auth-portal-yda123/webApps/-/config 200
+[debug] [2026-04-08T02:28:17.592Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/auth-portal-yda123/webApps/-/config {"projectId":"auth-portal-yda123","storageBucket":"auth-portal-yda123.firebasestorage.app","apiKey":"AIzaSyD9gN0b__g1X44gDZrFmbyQVImaFijkx0c","authDomain":"auth-portal-yda123.firebaseapp.com","messagingSenderId":"683788183457","projectNumber":"683788183457","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-04-08T02:28:48.144Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:48.144Z] Checked if tokens are valid: true, expires at: 1775618475361
+[debug] [2026-04-08T02:28:48.145Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites/auth-portal-yda123 [none]
+[debug] [2026-04-08T02:28:49.245Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites/auth-portal-yda123 200
+[debug] [2026-04-08T02:28:49.246Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/auth-portal-yda123/sites/auth-portal-yda123 {"name":"projects/auth-portal-yda123/sites/auth-portal-yda123","defaultUrl":"https://auth-portal-yda123.web.app","type":"DEFAULT_SITE"}
+[info] ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\yaada\dev\rbloginsystem\pnpm-workspace.yaml as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\yaada\dev\rbloginsystem\apps\frontend\pnpm-workspace.yaml
+
+
+[info] ▲ Next.js 16.2.2 (Turbopack)
+
+[info] 
+
+[info]   Creating an optimized production build ...
+
+[info] ✓ Compiled successfully in 8.4s
+
+[info]   Running TypeScript ...
+
+[info]   Finished TypeScript in 4.9s ...
+
+[info]   Collecting page data using 3 workers ...
+
+[info]   Generating static pages using 3 workers (0/10) ...
+
+[info] Error occurred prerendering page "/user/profile". Read more: https://nextjs.org/docs/messages/prerender-error
+
+[info] Error [FirebaseError]: Firebase: Error (auth/invalid-api-key).
+    at aS (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:29390)
+    at aT (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:29439)
+    at N.instanceFactory (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:82607)
+    at P.getOrInitializeService (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:13165)
+    at P.initialize (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:12567)
+    at <unknown> (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:81281)
+    at cv (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\0uf0_firebase_auth_dist_index_mjs_0luelaz._.js:1:81310)
+    at module evaluation (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\[root-of-the-server]__0_3piz~._.js:1:2300)
+    at instantiateModule (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\[turbopack]_runtime.js:853:9)
+    at getOrInstantiateModuleFromParent (C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\server\chunks\ssr\[turbopack]_runtime.js:877:12) {
+  code: 'auth/invalid-api-key',
+  customData: { appName: '[DEFAULT]' },
+  digest: '1790824074'
+}
+
+[info] Export encountered an error on /(dashboard)/user/profile/page: /user/profile, exiting the build.
+
+[info] ⨯ Next.js build worker exited with code: 1 and signal: null
+
+[debug] [2026-04-08T02:29:13.512Z] Error: ENOENT: no such file or directory, open 'C:\Users\yaada\dev\rbloginsystem\apps\frontend\.next\export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
