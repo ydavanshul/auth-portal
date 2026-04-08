@@ -1,13 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 
-export function roleMiddleware(allowedRoles: string[]) {
+export function requireRole(allowedRoles: string[]) {
   return (req: Request, res: Response, next: NextFunction) => {
-    const userRole = (req as any).user?.role;
-    
-    if (!userRole || !allowedRoles.includes(userRole)) {
-      return res.status(403).json({ message: "Forbidden: insufficient permissions" });
+    const user = (req as any).user;
+
+    if (!user || !user.role) {
+      return res.status(403).json({ status: "error", message: "Forbidden: Missing role" });
     }
-    
+
+    if (!allowedRoles.includes(user.role)) {
+      return res.status(403).json({ status: "error", message: "Forbidden: Insufficient privileges" });
+    }
+
     next();
   };
 }
