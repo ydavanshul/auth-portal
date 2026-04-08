@@ -28,12 +28,16 @@ app.use(cookieParser());
 app.use(globalRateLimiter);
 
 import authRoutes from "./modules/auth/auth.routes";
+import adminRoutes from "./modules/admin/admin.routes";
+import managerRoutes from "./modules/manager/manager.routes";
 
 // Setup CSRF token for the session
 app.use(generateCsrfToken);
 
-// Auth Routes
+// Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/manager", managerRoutes);
 
 // Health check doesn't need strict verification
 app.get("/health", (req, res) => {
