@@ -3,10 +3,18 @@
 import { useState, useEffect } from "react";
 import { secureFetch } from "@/lib/api/client";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
+
+interface Profile {
+  email: string;
+  username?: string;
+  displayName?: string;
+  profileImage?: string;
+}
 
 export function ProfileForm() {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [username, setUsername] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [message, setMessage] = useState("");
@@ -18,9 +26,10 @@ export function ProfileForm() {
     if (user) {
       secureFetch(`${backendUrl}/api/profile`)
         .then((res) => {
-          setProfile(res.data);
-          setUsername(res.data.username || "");
-          setDisplayName(res.data.displayName || "");
+          const data = res.data as Profile;
+          setProfile(data);
+          setUsername(data.username || "");
+          setDisplayName(data.displayName || "");
         })
         .catch(() => setError("Failed to load profile"));
     }
@@ -38,8 +47,9 @@ export function ProfileForm() {
         body: JSON.stringify({ username, displayName })
       });
       setMessage("Profile updated successfully!");
-    } catch (err: any) {
-      setError(err.message || "Failed to update profile.");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to update profile.";
+      setError(message);
     }
   };
 
@@ -55,10 +65,11 @@ export function ProfileForm() {
         method: "POST",
         body: formData // Fetch will automatically set multipart/form-data with bounds here
       });
-      setProfile((prev: any) => ({ ...prev, profileImage: res.data.profileImage }));
+      setProfile((prev) => prev ? ({ ...prev, profileImage: res.data.profileImage }) : null);
       setMessage("Avatar uploaded successfully!");
-    } catch (err: any) {
-      setError(err.message || "Failed to upload image.");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to upload image.";
+      setError(message);
     }
   };
 
@@ -72,11 +83,12 @@ export function ProfileForm() {
       {error && <div className="p-4 mb-4 text-red-700 bg-red-100 rounded">{error}</div>}
 
       <div className="mb-8 flex items-center space-x-6">
-        <div className="flex-shrink-0">
-          <img
-            className="h-24 w-24 object-cover rounded-full border border-gray-200"
+        <div className="flex-shrink-0 relative h-24 w-24">
+          <Image
+            className="object-cover rounded-full border border-gray-200"
             src={profile.profileImage || "https://via.placeholder.com/150"}
             alt="Profile avatar"
+            fill
           />
         </div>
         <div>

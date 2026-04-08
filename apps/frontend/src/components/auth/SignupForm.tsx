@@ -19,8 +19,9 @@ export const SignupForm = () => {
       // The backend will automatically create the user in DB on the next request 
       // thanks to the sync logic in our auth middleware.
       router.push("/");
-    } catch (err: any) {
-      setError(err.message || "Failed to sign up");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to sign up";
+      setError(message);
     }
   };
 

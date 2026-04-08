@@ -29,8 +29,9 @@ export default function RegisterForm() {
       }
 
       window.location.href = "/user/profile";
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to register";
+      setError(message);
     }
   };
 

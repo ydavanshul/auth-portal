@@ -1,7 +1,7 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
+import { getAuth, Auth } from "firebase/auth";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "dummy_api_key",
@@ -13,9 +13,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase only once
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 // Safe export bypassing Next.js server-side prerender crashes if env variables are empty
-export const auth = typeof window !== "undefined" ? getAuth(app) : ({} as any);
-export const db = typeof window !== "undefined" ? getFirestore(app) : ({} as any);
-export const storage = typeof window !== "undefined" ? getStorage(app) : ({} as any);
+export const auth: Auth = typeof window !== "undefined" ? getAuth(app) : ({} as unknown as Auth);
+export const db: Firestore = typeof window !== "undefined" ? getFirestore(app) : ({} as unknown as Firestore);
+export const storage: FirebaseStorage = typeof window !== "undefined" ? getStorage(app) : ({} as unknown as FirebaseStorage);

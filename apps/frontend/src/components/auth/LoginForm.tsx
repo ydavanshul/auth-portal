@@ -25,8 +25,9 @@ export const LoginForm = () => {
       await api.post("/api/auth/login", { idToken });
 
       router.push("/");
-    } catch (err: any) {
-      setError(err.response?.data?.message || err.message || "Failed to login");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to login";
+      setError(message);
     } finally {
       setLoading(false);
     }

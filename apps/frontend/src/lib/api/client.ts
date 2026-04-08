@@ -1,8 +1,15 @@
 import { getCsrfToken } from "./csrf";
 
+interface FetchError extends Error {
+  response?: {
+    status: number;
+    data: unknown;
+  };
+}
+
 export async function secureFetch(url: string, options: RequestInit = {}) {
   const csrfToken = getCsrfToken();
-  const defaultHeaders: HeadersInit = {
+  const defaultHeaders: Record<string, string> = {
     "Content-Type": "application/json",
   };
 
@@ -19,7 +26,7 @@ export async function secureFetch(url: string, options: RequestInit = {}) {
     ...options,
     headers: {
       ...defaultHeaders,
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     },
     credentials: "include", // Essential for HttpOnly cookies
   });
@@ -34,7 +41,7 @@ export async function secureFetch(url: string, options: RequestInit = {}) {
     }
     
     const errorData = await response.json().catch(() => ({ message: "An error occurred" }));
-    const error = new Error(errorData.message || response.statusText) as any;
+    const error = new Error(errorData.message || response.statusText) as FetchError;
     error.response = {
       status: response.status,
       data: errorData,

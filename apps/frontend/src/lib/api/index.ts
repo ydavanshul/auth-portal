@@ -4,7 +4,7 @@ export const api = {
   get: (url: string, options?: RequestInit) =>
     secureFetch(url, { ...options, method: "GET" }),
   
-  post: (url: string, body: any, options?: RequestInit) =>
+  post: (url: string, body: unknown, options?: RequestInit) =>
     secureFetch(url, {
       ...options,
       method: "POST",
@@ -15,7 +15,7 @@ export const api = {
       body: JSON.stringify(body),
     }),
   
-  put: (url: string, body: any, options?: RequestInit) =>
+  put: (url: string, body: unknown, options?: RequestInit) =>
     secureFetch(url, {
       ...options,
       method: "PUT",
