@@ -30,6 +30,7 @@ app.use(globalRateLimiter);
 import authRoutes from "./modules/auth/auth.routes";
 import adminRoutes from "./modules/admin/admin.routes";
 import managerRoutes from "./modules/manager/manager.routes";
+import profileRoutes from "./modules/profile/profile.routes";
 
 // Setup CSRF token for the session
 app.use(generateCsrfToken);
@@ -38,6 +39,7 @@ app.use(generateCsrfToken);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/manager", managerRoutes);
+app.use("/api/profile", verifyCsrfToken, profileRoutes);
 
 // Health check doesn't need strict verification
 app.get("/health", (req, res) => {
