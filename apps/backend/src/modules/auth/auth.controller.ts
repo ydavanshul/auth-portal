@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyAndGetDbUser } from "./auth.service";
+import { verifyAndGetDbUser, createSession, revokeSession } from "./auth.service";
 import { signAccessToken, signRefreshToken } from "../../security/jwt/tokens";
 import { setAuthCookies, clearAuthCookies } from "../../security/cookies/auth-cookies";
 import { verifyRefreshToken } from "../../security/jwt/verify";
@@ -17,6 +17,9 @@ export async function loginController(req: Request, res: Response, next: NextFun
     const payload = { userId: user.id, role: user.role };
     const accessToken = signAccessToken(payload);
     const refreshToken = signRefreshToken(payload);
+
+    // Save strictly to postgres DB
+    await createSession(user.id, refreshToken, req);
 
     // Send HTTP-Only Cookies
     setAuthCookies(res, accessToken, refreshToken);
@@ -37,12 +40,16 @@ export async function loginController(req: Request, res: Response, next: NextFun
   }
 }
 
-export function logoutController(req: Request, res: Response) {
+export async function logoutController(req: Request, res: Response) {
+  const refreshToken = req.cookies.refreshToken;
+  if (refreshToken) {
+    await revokeSession(refreshToken);
+  }
   clearAuthCookies(res);
   res.status(200).json({ status: "success", message: "Logged out" });
 }
 
-export function refreshTokenController(req: Request, res: Response) {
+export async function refreshTokenController(req: Request, res: Response) {
   try {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
@@ -52,10 +59,14 @@ export function refreshTokenController(req: Request, res: Response) {
     const decoded = verifyRefreshToken(refreshToken) as any;
     const payload = { userId: decoded.userId, role: decoded.role };
 
+    // Burn old session, create new strict rotation
+    await revokeSession(refreshToken);
     const newAccessToken = signAccessToken(payload);
+    const newRefreshToken = signRefreshToken(payload);
+    await createSession(decoded.userId, newRefreshToken, req);
     
     // We optionally rotate the refresh token here too if requested
-    setAuthCookies(res, newAccessToken, refreshToken);
+    setAuthCookies(res, newAccessToken, newRefreshToken);
 
     res.status(200).json({ status: "success", message: "Token refreshed" });
   } catch (error) {

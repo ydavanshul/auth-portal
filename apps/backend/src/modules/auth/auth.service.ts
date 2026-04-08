@@ -29,3 +29,24 @@ export async function verifyAndGetDbUser(idToken: string): Promise<User> {
 
   return user;
 }
+
+export async function createSession(userId: string, refreshToken: string, req: any) {
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 7); // 7 days
+
+  return prisma.session.create({
+    data: {
+      userId,
+      refreshToken,
+      userAgent: req.headers["user-agent"] || null,
+      ipAddress: req.ip || null,
+      expiresAt
+    }
+  });
+}
+
+export async function revokeSession(refreshToken: string) {
+  return prisma.session.delete({
+    where: { refreshToken }
+  }).catch(() => null); // ignore if not found
+}
