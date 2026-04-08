@@ -21,11 +21,14 @@ export async function secureFetch(url: string, options: RequestInit = {}) {
 
   if (!response.ok) {
     // Interceptor-like behavior could handle 401s here to trigger token refresh
-    if (response.status === 401) {
+    if (response.status === 401 && !url.includes("/api/auth/session")) {
        // logic for refresh token or redirect to login
+       if (typeof window !== "undefined") {
+         // window.location.href = "/login";
+       }
     }
-    const error = await response.json().catch(() => ({ message: "An error occurred" }));
-    throw new Error(error.message || response.statusText);
+    const errorData = await response.json().catch(() => ({ message: "An error occurred" }));
+    throw new Error(errorData.message || response.statusText);
   }
 
   return response.json();

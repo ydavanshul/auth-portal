@@ -12,9 +12,23 @@ export default function RegisterForm() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Basic firebase register stub
-      await createUserWithEmailAndPassword(auth, email, password);
-      window.location.href = "/login";
+      // 1. Basic firebase register
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const idToken = await userCredential.user.getIdToken();
+
+      // 2. Transmit to secure backend (creates Prisma record + attaches HttpOnly cookies)
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const response = await fetch(`${backendUrl}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
+      });
+
+      if (!response.ok) {
+         throw new Error("Failed to configure backend session.");
+      }
+
+      window.location.href = "/user/profile";
     } catch (err: any) {
       setError(err.message);
     }

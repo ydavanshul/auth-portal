@@ -1,73 +1,75 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../lib/firebase";
-import { User, Role } from "@monorepo/shared-types";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
+import { auth } from "@/lib/firebase/config";
+import { secureFetch } from "@/lib/api/client";
 
-interface AuthContextType {
-  user: User | null;
-  firebaseUser: any;
-  loading: boolean;
+interface AuthUser {
+  id: string;
+  email: string;
+  role: string;
+}
+
+interface AuthState {
+  isAuthenticated: boolean;
+  user: AuthUser | null;
+  isLoading: boolean;
   logout: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthState>({
+  isAuthenticated: false,
+  user: null,
+  isLoading: true,
+  logout: async () => {},
+});
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [firebaseUser, firebaseLoading] = useAuthState(auth);
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          const token = await firebaseUser.getIdToken();
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
+          // Fetch our backend /me session to get the DB user and role
+          const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+          const res = await secureFetch(`${backendUrl}/api/auth/session`);
+          if (res.status === "success") {
+            setUser(res.data.user);
           } else {
-              // Handle error or unauthorized
-              setUser(null);
+            setUser(null);
           }
         } catch (error) {
-          console.error("Error fetching user data:", error);
+          console.error("Session verification failed", error);
           setUser(null);
         }
       } else {
         setUser(null);
       }
-      setLoading(false);
-    };
+      setIsLoading(false);
+    });
 
-    if (!firebaseLoading) {
-      fetchUserData();
-    }
-  }, [firebaseUser, firebaseLoading]);
+    return () => unsubscribe();
+  }, []);
 
   const logout = async () => {
-    await auth.signOut();
-    setUser(null);
+    try {
+      await auth.signOut();
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      await secureFetch(`${backendUrl}/api/auth/logout`, { method: "POST" });
+      setUser(null);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, firebaseUser, loading: loading || firebaseLoading, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated: !!user, user, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+export const useAuth = () => useContext(AuthContext);
