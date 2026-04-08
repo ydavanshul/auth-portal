@@ -12,7 +12,7 @@
     "next": "16.2.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "firebase": "^12.11.0",
+    "firebase": "^11.4.0",
     "react-firebase-hooks": "^5.1.1",
     "@monorepo/shared-types": "workspace:*"
   },

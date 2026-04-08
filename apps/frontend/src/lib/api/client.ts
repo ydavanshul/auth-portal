@@ -32,8 +32,14 @@ export async function secureFetch(url: string, options: RequestInit = {}) {
          // window.location.href = "/login";
        }
     }
+    
     const errorData = await response.json().catch(() => ({ message: "An error occurred" }));
-    throw new Error(errorData.message || response.statusText);
+    const error = new Error(errorData.message || response.statusText) as any;
+    error.response = {
+      status: response.status,
+      data: errorData,
+    };
+    throw error;
   }
 
   return response.json();

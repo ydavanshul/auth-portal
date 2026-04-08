@@ -4,14 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "build": "tsc",
+    "build": "node build.js",
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
-    "@monorepo/shared-types": "workspace:*",
-    "@monorepo/shared-validation": "workspace:*",
     "@prisma/client": "^5.10.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
@@ -26,12 +24,15 @@
     "zod": "^3.22.0"
   },
   "devDependencies": {
+    "@monorepo/shared-types": "workspace:*",
+    "@monorepo/shared-validation": "workspace:*",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/multer": "^2.1.0",
+    "esbuild": "^0.28.0",
     "nodemon": "^3.0.1",
     "prisma": "^5.10.0",
     "ts-node": "^10.9.1",
