@@ -1,0 +1,9 @@
+{
+  "name": "@monorepo/eslint-config",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0"
+  }
+}
