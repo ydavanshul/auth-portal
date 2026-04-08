@@ -2,14 +2,6 @@
   "projects": {
     "default": "auth-portal-yda123"
   },
-  "targets": {
-    "auth-portal-yda123": {
-      "hosting": {
-        "frontend": [
-          "frontend-auth-portal"
-        ]
-      }
-    }
-  },
+  "targets": {},
   "etags": {}
 }

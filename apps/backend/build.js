@@ -16,7 +16,6 @@ esbuild.build({
     "express-rate-limit",
     "zod",
     "multer",
-    "@prisma/client",
     "bcrypt",
     "jsonwebtoken"
   ]
