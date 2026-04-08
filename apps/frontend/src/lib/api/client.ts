@@ -10,6 +10,11 @@ export async function secureFetch(url: string, options: RequestInit = {}) {
     defaultHeaders["x-csrf-token"] = csrfToken;
   }
 
+  // Prevent overwriting multipart bounds when uploading files natively via FormData
+  if (options.body instanceof FormData) {
+    delete defaultHeaders["Content-Type"];
+  }
+
   const response = await fetch(url, {
     ...options,
     headers: {
